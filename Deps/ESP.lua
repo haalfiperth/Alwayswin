@@ -1,6 +1,7 @@
 local Workspace, RunService, Players, CoreGui, Lighting, UIS = cloneref(game:GetService("Workspace")), cloneref(game:GetService("RunService")), cloneref(game:GetService("Players")), game:GetService("CoreGui"), cloneref(game:GetService("Lighting")), cloneref(game:GetService("UserInputService"))
 local ESP = {
         Enabled = true,
+        TargetOnly = false,
         TeamCheck = true,
         MaxDistance = 200,
         FontSize = 11,
@@ -257,7 +258,8 @@ local ESP = {
                         end         
                     end]]
                     --
-                    if plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+                    if ESP.Enabled and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+                        if not ESP.TargetOnly or plr == TargetPlr then
                         local cframe, size, position = Functions:custom_bounds(plr.Character)
                         local HRP = plr.Character.HumanoidRootPart;
                         local Humanoid = plr.Character:WaitForChild("Humanoid");
@@ -475,6 +477,7 @@ local ESP = {
                         end
                     else
                         HideESP();
+                    end
                     end
                 end)
             end
