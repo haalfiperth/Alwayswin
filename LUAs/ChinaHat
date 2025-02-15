@@ -1,5 +1,5 @@
 settings = {
-   enabled = false; -- / true / false
+   enabled = true; -- / true / false
    minCameraDistance = 1; -- / any number
    hatTransparency = .35; -- / 0 - 1 (0 being invisible)
    circleTransparency = 1; -- / 0 - 1 (0 being invisible)
