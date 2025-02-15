@@ -1,12 +1,12 @@
 local Skyboxes = {
-	Minecraft = {
+    Minecraft = {
         SkyboxBk = "rbxassetid://1876545003",
         SkyboxDn = "rbxassetid://1876544331",
         SkyboxFt = "rbxassetid://1876542941",
         SkyboxLf = "rbxassetid://1876543392",
         SkyboxRt = "rbxassetid://1876543764",
         SkyboxUp = "rbxassetid://1876544642"
-    }
+    },
     
     PurpleDay = {
         SkyboxBk = "rbxassetid://296908715",
