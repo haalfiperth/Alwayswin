@@ -649,7 +649,7 @@ do -- // Visuals
                                         SetRenderProperty(Renders.BoxInline, "Size", BoxSize)
                                         SetRenderProperty(Renders.BoxInline, "Position", BoxPosition)
                                         SetRenderProperty(Renders.BoxInline, "Visible", true)
-                                        if ESP.Main.UseTargetColor and Target then
+                                        if ESP.Main.UseTargetColor and Target ~= nil and Player == Target then
                                             SetRenderProperty(Renders.BoxInline, "Color", ESP.Main.TargetColor)
                                         else
                                             SetRenderProperty(Renders.BoxInline, "Color", BoxColor1)
@@ -664,7 +664,7 @@ do -- // Visuals
                                         SetRenderProperty(Renders.BoxFill, "Size", BoxSize)
                                         SetRenderProperty(Renders.BoxFill, "Position", BoxPosition)
                                         SetRenderProperty(Renders.BoxFill, "Visible", true)
-                                        if ESP.Main.UseTargetColor and Target then
+                                        if ESP.Main.UseTargetColor and Target ~= nil and Player == Target then
                                             SetRenderProperty(Renders.BoxFill, "Color", ESP.Main.TargetColor)
                                         else
                                             SetRenderProperty(Renders.BoxFill, "Color", BoxColor2)
