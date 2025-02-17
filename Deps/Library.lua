@@ -1,4 +1,11 @@
-
+if not isfile("ProggyClean.ttf") then
+	writefile("ProggyClean.ttf", game:HttpGet("https://github.com/f1nobe7650/other/raw/main/ProggyClean.ttf"))
+end
+--
+if isfile("UI_FONT.font") then
+	delfile("UI_FONT.font")
+end
+--
 local Library = {};
 do
 	Library = {
