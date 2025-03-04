@@ -952,7 +952,7 @@ do
         end);
 
         if TransparencyBoxInner then
-            lTransparencyBoxInner.InputBegan:Connect(function(Input)
+            TransparencyBoxInner.InputBegan:Connect(function(Input)
                 if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
                     while Services.UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1 or Enum.UserInputType.Touch) do
                         local MinX = TransparencyBoxInner.AbsolutePosition.X;
