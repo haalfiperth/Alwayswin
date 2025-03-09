@@ -1,3 +1,5 @@
+local game = cloneref(game)
+local RunService = cloneref(game:GetService("RunService"))
 task.spawn(function()
     local OldGetFenv
     OldGetFenv = hookfunction(getrenv().getfenv, function(...)
