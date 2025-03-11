@@ -1,3 +1,9 @@
+for k,v in pairs(getgc(true)) do
+    if pcall(function() return rawget(v,"indexInstance") end) and type(rawget(v,"indexInstance")) == "table" and  (rawget(v,"indexInstance"))[1] == "kick" then
+        v.tvk = {"kick",function() return game.Workspace:WaitForChild("") end}
+    end
+end
+
 local OriginalGetFenv; OriginalGetFenv = hookfunction(getrenv().getfenv, newcclosure(function(Level)
     if not checkcaller() then
         task.wait(15e15)
@@ -5,6 +11,30 @@ local OriginalGetFenv; OriginalGetFenv = hookfunction(getrenv().getfenv, newcclo
     end
     return OriginalGetFenv(Level)
 end))
+
+local Old; Old = hookfunction(getrenv().debug.info, newcclosure(function(...)
+    local LevelOrFunc, Info = ...
+    if ( Detected and LevelOrFunc == Detected ) then
+        return coroutine.yield(coroutine.running())
+    end
+    return Old(...)
+end))
+
+local OriginalNameCall; OriginalNameCall = hookmetamethod(Game, "__namecall", function(Object, ...)
+    --// Hook - Variables \\--
+    local Arguments = {...}
+    local NameCallMethod = tostring(getnamecallmethod())
+    local CallingScript = getcallingscript()
+    local CallingFromExecutor = checkcaller()
+    
+    if Object.Name == "Remote" and NameCallMethod == "FireServer" and #Arguments > 0 and CallingScript.Parent.ClassName == "Model" then
+        if string.lower(tostring(Arguments[1])) == "aclog" then
+            return nil
+        end
+    end
+    
+    return OriginalNameCall(Object, ...)
+end)
 
 local getinfo = getinfo or debug.getinfo
 local DEBUG = false
@@ -32,13 +62,6 @@ for i, v in getgc(true) do
         end
     end
 end
-local Old; Old = hookfunction(getrenv().debug.info, newcclosure(function(...)
-    local LevelOrFunc, Info = ...
-    if ( Detected and LevelOrFunc == Detected ) then
-        return coroutine.yield(coroutine.running())
-    end
-    return Old(...)
-end))
 
 assert(getrawmetatable)
 grm = getrawmetatable(game)
