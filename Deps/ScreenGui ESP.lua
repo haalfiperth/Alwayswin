@@ -257,7 +257,7 @@
                         end         
                     end]]
                     --
-                    if plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+                    if ESP.Enabled and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
                         local cframe, size, position = Functions:custom_bounds(plr.Character)
                         local HRP = plr.Character.HumanoidRootPart;
                         local Humanoid = plr.Character:WaitForChild("Humanoid");
@@ -492,5 +492,3 @@
             end);
         end;
     end;
-    --
-    return ESP
