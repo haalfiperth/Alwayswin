@@ -14,22 +14,6 @@ local Old; Old = hookfunction(getrenv().debug.info, newcclosure(function(...)
     return Old(...)
 end))
 
-local OriginalNameCall; OriginalNameCall = hookmetamethod(Game, "__namecall", function(Object, ...)
-    --// Hook - Variables \\--
-    local Arguments = {...}
-    local NameCallMethod = tostring(getnamecallmethod())
-    local CallingScript = getcallingscript()
-    local CallingFromExecutor = checkcaller()
-    
-    if Object.Name == "Remote" and NameCallMethod == "FireServer" and #Arguments > 0 and CallingScript.Parent.ClassName == "Model" then
-        if string.lower(tostring(Arguments[1])) == "aclog" then
-            return nil
-        end
-    end
-    
-    return OriginalNameCall(Object, ...)
-end)
-
 local getinfo = getinfo or debug.getinfo
 local DEBUG = false
 local Hooked = {}
