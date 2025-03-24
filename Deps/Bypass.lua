@@ -18,7 +18,6 @@ local getinfo = getinfo or debug.getinfo
 local DEBUG = false
 local Hooked = {}
 local Detected, Kill
-setthreadidentity(2)
 for i, v in getgc(true) do
     if ( typeof(v) == 'table' ) then
         local DetectFunc = rawget(v, 'Detected')
