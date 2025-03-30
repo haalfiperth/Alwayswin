@@ -3424,49 +3424,33 @@ do
             if Library.Unloaded then
                 return
             end
-
+        
             local Str = ""
-
+        
             if Info.Multi then
+                local SelectedCount = 0
                 for _, Value in pairs(Dropdown.Values) do
                     if Dropdown.Value[Value] then
-                        Str = Str
-                            .. (Info.FormatDisplayValue and tostring(Info.FormatDisplayValue(Value)) or tostring(Value))
-                            .. ", "
+                        Str = Str .. (Info.FormatDisplayValue and tostring(Info.FormatDisplayValue(Value)) or tostring(Value)) .. ", "
+                        SelectedCount += 1
                     end
                 end
-
-                Str = Str:sub(1, #Str - 2)
+        
+                if SelectedCount > 0 then
+                    Str = Str:sub(1, #Str - 2) -- Remove the last comma and space
+                end
             else
                 Str = Dropdown.Value and tostring(Dropdown.Value) or ""
                 if Str ~= "" and Info.FormatDisplayValue then
                     Str = tostring(Info.FormatDisplayValue(Str))
                 end
             end
-
+        
             if #Str > 25 then
                 Str = Str:sub(1, 22) .. "..."
             end
-
+        
             Display.Text = (Str == "" and "---" or Str)
-        end
-
-        function Dropdown:OnChanged(Func)
-            Dropdown.Changed = Func
-        end
-
-        function Dropdown:GetActiveValues()
-            if Info.Multi then
-                local Table = {}
-
-                for Value, _ in pairs(Dropdown.Value) do
-                    table.insert(Table, Value)
-                end
-
-                return Table
-            end
-
-            return Dropdown.Value and 1 or 0
         end
 
         local Buttons = {}
@@ -3561,27 +3545,27 @@ do
         function Dropdown:SetValue(Value)
             if Info.Multi then
                 local Table = {}
-
-                for Val, Active in pairs(Value or {}) do
-                    if Active and table.find(Dropdown.Values, Val) then
-                        Table[Val] = true
+        
+                if typeof(Value) == "table" then
+                    for _, Val in pairs(Value) do
+                        if table.find(Dropdown.Values, Val) then
+                            Table[Val] = true
+                        end
                     end
+                elseif table.find(Dropdown.Values, Value) then
+                    Table[Value] = true
                 end
-
+        
                 Dropdown.Value = Table
             else
-                if table.find(Dropdown.Values, Value) then
-                    Dropdown.Value = Value
-                elseif not Value then
-                    Dropdown.Value = nil
-                end
+                Dropdown.Value = table.find(Dropdown.Values, Value) and Value or nil
             end
-
+        
             Dropdown:Display()
             for _, Button in pairs(Buttons) do
                 Button:UpdateButton()
             end
-
+        
             if not Dropdown.Disabled then
                 Library:SafeCallback(Dropdown.Callback, Dropdown.Value)
                 Library:SafeCallback(Dropdown.Changed, Dropdown.Value)
