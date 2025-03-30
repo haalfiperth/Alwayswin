@@ -22,10 +22,14 @@ end
 local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 
-local Labels = {}
-local Buttons = {}
+local Labels = {};
+local Buttons = {};
 local Toggles = {};
 local Options = {};
+
+getgenv().Labels = Labels;
+getgenv().Buttons = Buttons;
+getgenv().Toggles = Toggles;
 getgenv().Options = Options;
 
 local Library = {
@@ -50,10 +54,6 @@ local Library = {
 
     Toggled = false,
     Unloaded = false,
-
-    Labels = Labels,
-    Buttons = Buttons,
-    Toggles = Toggles,
 
     NotifySide = "Right",
     ShowCustomCursor = true,
