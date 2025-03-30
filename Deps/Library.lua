@@ -55,6 +55,11 @@ local Library = {
     Toggled = false,
     Unloaded = false,
 
+    Labels = Labels,
+    Buttons = Buttons,
+    Toggles = Toggles,
+    Options = Options,
+
     NotifySide = "Right",
     ShowCustomCursor = true,
     ForceCheckbox = false,
