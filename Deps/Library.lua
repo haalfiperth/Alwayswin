@@ -27,6 +27,9 @@ local Buttons = {};
 local Toggles = {};
 local Options = {};
 
+getgenv().Labels = Labels;
+getgenv().Buttons = Buttons;
+getgenv().Toggles = Toggles;
 getgenv().Options = Options;
 
 local Library = {
