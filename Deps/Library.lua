@@ -3019,7 +3019,6 @@ do
         Groupbox:Resize()
 
         Input.Holder = Holder
-        table.insert(Groupbox.Elements, Input)
 
         Options[Idx] = Input
 
