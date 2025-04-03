@@ -3715,8 +3715,7 @@ do
         Groupbox:Resize()
 
         Dropdown.Holder = Holder
-        table.insert(Groupbox.Elements, Dropdown)
-
+        
         Options[Idx] = Dropdown
 
         return Dropdown
