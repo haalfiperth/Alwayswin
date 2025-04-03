@@ -3272,7 +3272,6 @@ do
         Groupbox:Resize()
 
         Slider.Holder = Holder
-        table.insert(Groupbox.Elements, Slider)
 
         Options[Idx] = Slider
 
