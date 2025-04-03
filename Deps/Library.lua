@@ -2860,7 +2860,6 @@ do
         setmetatable(Toggle, BaseAddons)
 
         Toggle.Holder = Button
-        table.insert(Groupbox.Elements, Toggle)
 
         Toggles[Idx] = Toggle
 
