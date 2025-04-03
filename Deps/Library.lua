@@ -2439,8 +2439,7 @@ do
         Groupbox:Resize()
 
         Button.Holder = Holder
-        table.insert(Groupbox.Elements, Button)
-
+        
         if Info.Idx then
             Buttons[Info.Idx] = Button
         else
