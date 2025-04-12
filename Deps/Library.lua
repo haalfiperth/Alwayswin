@@ -4151,39 +4151,17 @@ function Library:CreateWindow(WindowInfo)
         end
 
         local X = Library:GetTextBounds(
-        	WindowInfo.Title,
-        	Library.Scheme.Font,
-        	20,
-        	TitleHolder.AbsoluteSize.X - (WindowInfo.Icon and WindowInfo.IconSize.X.Offset + 6 or 0) - 12
+            WindowInfo.Title,
+            Library.Scheme.Font,
+            20,
+            TitleHolder.AbsoluteSize.X - (WindowInfo.Icon and WindowInfo.IconSize.X.Offset + 6 or 0) - 12
         )
-        
         New("TextLabel", {
-        	Name = "Title1",
-        	Parent = TitleHolder,
-        	BackgroundColor3 = Color3.fromRGB(255,255,255),
-        	BackgroundTransparency = 1,
-        	BorderColor3 = Color3.fromRGB(0,0,0),
-        	BorderSizePixel = 0,
-        	Position = UDim2.new(0,10,0,10),
-        	Size = UDim2.new(0,180,0,50),
-        	ZIndex = 2,
-        	Font = Enum.Font.SourceSansBold,
-        	Text = WindowInfo.Title,
-        	TextSize = 35
-        })
-        
-        New("TextLabel", {
-        	Name = "Title2",
-        	Parent = TitleHolder,
-        	BackgroundColor3 = Color3.fromRGB(255,255,255),
-        	BackgroundTransparency = 1,
-        	BorderColor3 = Color3.fromRGB(0,0,0),
-        	BorderSizePixel = 0,
-        	Position = UDim2.new(0,11,0,10),
-        	Size = UDim2.new(0,180,0,50),
-        	Font = Enum.Font.SourceSansBold,
-        	Text = WindowInfo.Title,
-        	TextSize = 35
+            BackgroundTransparency = 1,
+            Size = UDim2.new(0, X, 1, 0),
+            Text = WindowInfo.Title,
+            TextSize = 20,
+            Parent = TitleHolder,
         })
 
         --// Search Box
