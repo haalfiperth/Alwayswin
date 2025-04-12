@@ -4335,7 +4335,6 @@ function Library:CreateWindow(WindowInfo)
         local WarningText
         local WarningStroke
 
-        Icon = Library:GetIcon(Icon)
         do
             TabButton = New("TextButton", {
                 BackgroundColor3 = "MainColor",
@@ -4366,10 +4365,8 @@ function Library:CreateWindow(WindowInfo)
 
             if Icon then
                 TabIcon = New("ImageLabel", {
-                    Image = Icon.Url,
+                    Image = "rbxassetid://"..tostring(Icon),
                     ImageColor3 = "AccentColor",
-                    ImageRectOffset = Icon.ImageRectOffset,
-                    ImageRectSize = Icon.ImageRectSize,
                     ImageTransparency = 0.5,
                     Size = UDim2.fromScale(1, 1),
                     SizeConstraint = Enum.SizeConstraint.RelativeYY,
