@@ -17,15 +17,15 @@ local Config = {
     Text = {
         Enable = true,
         Name = {
-            Enable = true,
+            Enable = false,
             Color = Color3.fromRGB(255, 255, 255);
         },
         Studs = {
-            Enable = true,
+            Enable = false,
             Color = Color3.fromRGB(255, 255, 255);
         },
         Tool = {
-            Enable = true,
+            Enable = false,
             Color = Color3.fromRGB(255, 255, 255);
         },
     },
