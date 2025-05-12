@@ -1,6 +1,7 @@
 local Config = {
     Box = {
         Enable = false,
+	Type = "Full",
         Font = "Arcade",
         Color = Color3.fromRGB(255, 255, 255),
         Filled = {
