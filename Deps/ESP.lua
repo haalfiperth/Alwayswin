@@ -18,6 +18,7 @@ local Config = {
         Enable = true,
         Name = {
             Enable = false,
+	    Type = "DisplayName",
             Color = Color3.fromRGB(255, 255, 255);
         },
         Studs = {
