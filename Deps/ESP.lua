@@ -23,7 +23,7 @@ local Config = {
         }
     },
     Text = {
-    	Font = "ProggyClean",
+    	Font = 'ProggyClean',
         Name = {
             Enabled = false,
             Type = "DisplayName",
