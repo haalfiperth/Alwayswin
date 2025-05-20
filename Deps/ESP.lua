@@ -155,7 +155,7 @@ utility.funcs.make_text = function(p)
     d.TextScaled = false
     d.TextSize = 10
     d.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-    d.Font = Fonts[Config.Text.Font]
+    d.FontFace = Fonts[Config.Text.Font]
     return d
 end
 
