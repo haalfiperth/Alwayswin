@@ -1,11 +1,11 @@
 local Config = {
     Box = {
-        Enabled = true,
+        Enabled = false,
         Type = 'Full',
         Font = "Arcade",
         Color = Color3.fromRGB(255, 255, 255),
         Filled = {
-            Enabled = true,
+            Enabled = false,
             Gradient = {
                 Enabled = true,
                 Color = {
@@ -23,11 +23,11 @@ local Config = {
     },
     Text = {
         Name = {
-            Enabled = true,
+            Enabled = false,
             Color = Color3.fromRGB(255, 255, 255);
         },
         Distance = {
-            Enabled = true,
+            Enabled = false,
             Color = Color3.fromRGB(255, 255, 255);
         },
         Weapon = {
@@ -38,7 +38,7 @@ local Config = {
     Bars = {
         Health = {
             ShowOutline = false,
-            Enabled = true,
+            Enabled = false,
             Lerp = true;
             Color1 = Color3.fromRGB(0, 255, 0);
             Color2 = Color3.fromRGB(255, 255, 0),
@@ -46,7 +46,7 @@ local Config = {
         },
         Armor = {
             ShowOutline = false,
-            Enabled = true,
+            Enabled = false,
             Lerp = true;
             Color1 = Color3.fromRGB(0, 0, 255);
             Color2 = Color3.fromRGB(135, 206, 235),
