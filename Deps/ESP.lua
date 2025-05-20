@@ -523,6 +523,8 @@ game:GetService("Players").PlayerRemoving:Connect(
     end
 )
 
+return Config
+
 connections.main = connections.main or {}
 
 connections.main.RenderStepped =
