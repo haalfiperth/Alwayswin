@@ -1,49 +1,53 @@
 local Config = {
     Box = {
-        Enable = false,
-	Type = "Full",
+        Enabled = true,
+        Type = 'Full',
         Font = "Arcade",
         Color = Color3.fromRGB(255, 255, 255),
         Filled = {
-            Enable = false,
+            Enabled = true,
             Gradient = {
-                Enable = false,
+                Enabled = true,
                 Color = {
                     Start = Color3.fromRGB(255, 255, 255),
                     End = Color3.fromRGB(0, 255, 0);
                 },
+                Rotation = {
+                    Enable = true,
+                    Auto = true,
+
+                },
+                Transparency = 0.3;
             }
         }
     },
     Text = {
-        Enable = true,
         Name = {
-            Enable = false,
-	    Type = "DisplayName",
+            Enabled = true,
             Color = Color3.fromRGB(255, 255, 255);
         },
-        Studs = {
-            Enable = false,
+        Distance = {
+            Enabled = true,
             Color = Color3.fromRGB(255, 255, 255);
         },
-        Tool = {
-            Enable = false,
+        Weapon = {
+            Enabled = true,
             Color = Color3.fromRGB(255, 255, 255);
         },
     },
     Bars = {
         Health = {
             ShowOutline = false,
-            Enable = false,
-            Lerp = false;
+            Enabled = true,
+            Lerp = true;
             Color1 = Color3.fromRGB(0, 255, 0);
             Color2 = Color3.fromRGB(255, 255, 0),
             Color3 = Color3.fromRGB(255, 0, 0)
         },
         Armor = {
             ShowOutline = false,
-            Enable = false,
-            Lerp = false;
+            Enabled = true,
+            Lerp = true;
             Color1 = Color3.fromRGB(0, 0, 255);
             Color2 = Color3.fromRGB(135, 206, 235),
             Color3 = Color3.fromRGB(1, 0, 0)
@@ -101,17 +105,17 @@ utility.funcs.render = LPH_NO_VIRTUALIZE(function(player)
         Filled = Instance.new('Frame', Instance.new('ScreenGui', game.CoreGui))
     }
 
-    local Studs = Instance.new("ScreenGui")
-    Studs.Parent = game.CoreGui
+    local Distance = Instance.new("ScreenGui")
+    Distance.Parent = game.CoreGui
 
     local Name = Instance.new("ScreenGui")
     Name.Parent = game.CoreGui
 
-    local Tool = Instance.new("ScreenGui")
-    Tool.Parent = game.CoreGui
+    local Weapon = Instance.new("ScreenGui")
+    Weapon.Parent = game.CoreGui
 
-    cache[player].Text.Studs = utility.funcs.make_text(Studs)
-    cache[player].Text.Tool = utility.funcs.make_text(Tool)
+    cache[player].Text.Distance = utility.funcs.make_text(Distance)
+    cache[player].Text.Weapon = utility.funcs.make_text(Weapon)
     cache[player].Text.Name = utility.funcs.make_text(Name)
 
     local armorGui = Instance.new("ScreenGui")
@@ -192,8 +196,8 @@ utility.funcs.clear_esp = LPH_NO_VIRTUALIZE(function(player)
     end
 
     if cache[player].Text then
-        if cache[player].Text.Studs then cache[player].Text.Studs.Visible = false end
-        if cache[player].Text.Tool then cache[player].Text.Tool.Visible = false end
+        if cache[player].Text.Distance then cache[player].Text.Distance.Visible = false end
+        if cache[player].Text.Weapon then cache[player].Text.Weapon.Visible = false end
         if cache[player].Text.Name then cache[player].Text.Name.Visible = false end
     end
 
@@ -238,47 +242,47 @@ utility.funcs.update = LPH_NO_VIRTUALIZE(function(player)
         return
     end
 
-    if Config.Box.Enable then
+    if Config.Box.Enabled then
         local fullBox = playerCache.Box.Full
-        local square, outline, inline, filled = fullBox.Square, fullBox.Outline, fullBox.Inline, fullBox.Filled
-
+        local square,outline,inline,filled = fullBox.Square,fullBox.Outline,fullBox.Inline,fullBox.Filled
+    
         if Config.Box.Type == "Full" then
-            square.Visible = Config.Box.Enable
+            square.Visible = Config.Box.Enabled
             square.Position = position
             square.Size = size
             square.Color = Config.Box.Color
             square.Thickness = 2
             square.Filled = false
             square.ZIndex = 9e9
-
-            outline.Visible = Config.Box.Enable
-            outline.Position = position - Vector2.new(1, 1)
-            outline.Size = size + Vector2.new(2, 2)
-            outline.Color = Color3.new(0, 0, 0)
+    
+            outline.Visible = Config.Box.Enabled
+            outline.Position = position - Vector2.new(1,1)
+            outline.Size = size + Vector2.new(2,2)
+            outline.Color = Color3.new(0,0,0)
             outline.Thickness = 1
             outline.Filled = false
-
+    
             inline.Visible = true
-            inline.Position = position + Vector2.new(1, 1)
-            inline.Size = size - Vector2.new(2, 2)
-            inline.Color = Color3.new(0, 0, 0)
+            inline.Position = position + Vector2.new(1,1)
+            inline.Size = size - Vector2.new(2,2)
+            inline.Color = Color3.new(0,0,0)
             inline.Thickness = 1
             inline.Filled = false
-
-            if Config.Box.Filled.Enable and filled then
-                filled.Position = UDim2.new(0, position.X, 0, position.Y - gui_inset.Y)
-                filled.Size = UDim2.new(0, size.X, 0, size.Y)
-                filled.BackgroundTransparency = 0.5
-                filled.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-                filled.Visible = Config.Box.Filled.Enable
+    
+            if Config.Box.Filled.Enabled and filled then
+                filled.Position = UDim2.new(0,position.X,0,position.Y - gui_inset.Y)
+                filled.Size = UDim2.new(0,size.X,0,size.Y)
+                filled.BackgroundTransparency = Config.Box.Filled.Gradient.Transparency or 0.5
+                filled.BackgroundColor3 = Color3.fromRGB(255,255,255)
+                filled.Visible = Config.Box.Filled.Enabled
                 filled.ZIndex = -9e9
-
-                if Config.Box.Filled.Gradient.Enable then
+    
+                if Config.Box.Filled.Gradient.Enabled then
                     local gradient = filled:FindFirstChild("Gradient") or Instance.new("UIGradient")
                     gradient.Name = "Gradient"
                     gradient.Color = ColorSequence.new({
-                        ColorSequenceKeypoint.new(0, Config.Box.Filled.Gradient.Color.Start),
-                        ColorSequenceKeypoint.new(1, Config.Box.Filled.Gradient.Color.End)
+                        ColorSequenceKeypoint.new(0,Config.Box.Filled.Gradient.Color.Start),
+                        ColorSequenceKeypoint.new(1,Config.Box.Filled.Gradient.Color.End)
                     })
                     gradient.Rotation = math.sin(tick() * 2) * 180
                     if not gradient.Parent then gradient.Parent = filled end
@@ -287,7 +291,6 @@ utility.funcs.update = LPH_NO_VIRTUALIZE(function(player)
                 filled.Visible = false
             end
         else
-            local fullBox = playerCache.Box.Full
             if fullBox then
                 fullBox.Square.Visible = false
                 fullBox.Outline.Visible = false
@@ -298,65 +301,80 @@ utility.funcs.update = LPH_NO_VIRTUALIZE(function(player)
             end
         end
     end
-
+    
     local bar_height = size.Y
     local bar_width = 3
     local base_x = position.X
     local y = position.Y - gui_inset.Y
-
-    if Config.Bars.Health.Enable and humanoid then
-        local targetHealth = math.clamp(humanoid.Health / humanoid.MaxHealth, 0, 1)
+    
+    if Config.Bars.Health.Enabled and humanoid then
+        local targetHealth = math.clamp(humanoid.Health / humanoid.MaxHealth,0,1)
         local lastHealth = playerCache.Bars.Health.LastHealth or targetHealth
         local lerpedHealth = lastHealth + (targetHealth - lastHealth) * 0.05
         playerCache.Bars.Health.LastHealth = lerpedHealth
-
+    
         local x = base_x - (bar_width + 4)
         local outline = playerCache.Bars.Health.Outline
         local fill = playerCache.Bars.Health.Frame
-
+    
         if outline and fill then
             outline.Visible = true
-            outline.Position = UDim2.new(0, x - 1, 0, y - 1)
-            outline.Size = UDim2.new(0, bar_width + 2, 0, bar_height + 1.1)
+            outline.Position = UDim2.new(0,x - 1,0,y - 1)
+            outline.Size = UDim2.new(0,bar_width + 2,0,bar_height + 1.1)
             outline.BackgroundTransparency = 0.2
-
+    
             fill.Visible = true
-            fill.Position = UDim2.new(0, 1, 0, (1 - lerpedHealth) * bar_height + 1)
-            fill.Size = UDim2.new(0, bar_width, 0, lerpedHealth * bar_height)
+            fill.Position = UDim2.new(0,1,0,(1 - lerpedHealth) * bar_height + 1)
+            fill.Size = UDim2.new(0,bar_width,0,lerpedHealth * bar_height)
+        end
+    else
+        if playerCache.Bars.Health.Outline then
+            playerCache.Bars.Health.Outline.Visible = false
+        end
+        if playerCache.Bars.Health.Frame then
+            playerCache.Bars.Health.Frame.Visible = false
         end
     end
-
-    if Config.Text.Enable then
-        local nameLabel = playerCache.Text.Name
-        local toolLabel = playerCache.Text.Tool
-        local studsLabel = playerCache.Text.Studs
     
-        local textOffset = 15
-        local baseX = position.X + (size.X / 2)
-        local baseY = position.Y - gui_inset.Y
+    local NameLabel = playerCache.Text.Name
+    local WeaponLabel = playerCache.Text.Weapon
+    local DistanceLabel = playerCache.Text.Distance
     
-        nameLabel.Visible = true
-        nameLabel.Position = UDim2.new(0, baseX - (nameLabel.AbsoluteSize.X / 2), 0, baseY - textOffset + 6)
-        nameLabel.Text = player.Name
+    local textOffset = 15
+    local baseX = position.X + (size.X / 2)
+    local baseY = position.Y - gui_inset.Y
     
-        toolLabel.Visible = true
-        toolLabel.Position = UDim2.new(0, baseX - (toolLabel.AbsoluteSize.X / 2), 0, baseY + size.Y + 15)
-        local tool = character:FindFirstChildOfClass("Tool")
-        toolLabel.Text = tool and tool.Name or "none"
-    
-        studsLabel.Visible = true
-        studsLabel.Position = UDim2.new(0, baseX - (studsLabel.AbsoluteSize.X / 2), 0, baseY + size.Y + 5)
-        local distance = (Camera.CFrame.Position - rootPart.Position).Magnitude
-        local meters = distance * 0.28
-        studsLabel.Text = string.format("[%.0fm]", meters)
-
+    if Config.Text.Name.Enabled then
+        NameLabel.Visible = true
+        NameLabel.Position = UDim2.new(0,baseX - (NameLabel.AbsoluteSize.X / 2),0,baseY - textOffset + 6)
+        NameLabel.Text = player.Name
+    else
+        NameLabel.Visible = false
     end
     
-
-    if Config.Bars.Armor.Enable and character then
+    if Config.Text.Weapon.Enabled then
+        WeaponLabel.Visible = true
+        WeaponLabel.Position = UDim2.new(0,baseX - (WeaponLabel.AbsoluteSize.X / 2),0,baseY + size.Y + 15)
+        local Weapon = character:FindFirstChildOfClass("Weapon")
+        WeaponLabel.Text = Weapon and Weapon.Name or "none"
+    else
+        WeaponLabel.Visible = false
+    end
+    
+    if Config.Text.Distance.Enabled then
+        DistanceLabel.Visible = true
+        DistanceLabel.Position = UDim2.new(0,baseX - (DistanceLabel.AbsoluteSize.X / 2),0,baseY + size.Y + 5)
+        local distance = (Camera.CFrame.Position - rootPart.Position).Magnitude
+        local meters = distance * 0.28
+        DistanceLabel.Text = string.format("[%.0fm]",meters)
+    else
+        DistanceLabel.Visible = false
+    end
+    
+    if  Config.Bars.Armor.Enabled and character then
         local bodyEffects = character:FindFirstChild("BodyEffects")
         local values = bodyEffects and bodyEffects:FindFirstChild("Armor")
-        local targetArmor = values and math.clamp(values.Value / 130, 0, 1) or 0
+        local targetArmor = values and math.clamp(values.Value / 130,0,1) or 0
     
         local lastArmor = playerCache.Bars.Armor.LastArmor or targetArmor
         local lerpedArmor = lastArmor + (targetArmor - lastArmor) * 0.05
@@ -366,19 +384,24 @@ utility.funcs.update = LPH_NO_VIRTUALIZE(function(player)
         local outline = playerCache.Bars.Armor.Outline
         local fill = playerCache.Bars.Armor.Frame
     
-        if outline then
+        if outline and fill then
             outline.Visible = true
-            outline.Position = UDim2.new(0, x - 1, 0, y - 1)
-            outline.Size = UDim2.new(0, bar_width + 2, 0, bar_height + 1.1)
+            outline.Position = UDim2.new(0,x - 1,0,y - 1)
+            outline.Size = UDim2.new(0,bar_width + 2,0,bar_height + 1.1)
             outline.BackgroundTransparency = 0.2
-        end
     
-        if fill then
             fill.Visible = true
-            fill.Position = UDim2.new(0, 1, 0, (1 - lerpedArmor) * bar_height + 1)
-            fill.Size = UDim2.new(0, bar_width, 0, lerpedArmor * bar_height)
+            fill.Position = UDim2.new(0,1,0,(1 - lerpedArmor) * bar_height + 1)
+            fill.Size = UDim2.new(0,bar_width,0,lerpedArmor * bar_height)
         end
-    end    
+    else
+        if playerCache.Bars.Armor.Outline then
+            playerCache.Bars.Armor.Outline.Visible = false
+        end
+        if playerCache.Bars.Armor.Frame then
+            playerCache.Bars.Armor.Frame.Visible = false
+        end
+    end
 end)
 
 
