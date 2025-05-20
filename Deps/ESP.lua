@@ -24,6 +24,7 @@ local Config = {
     Text = {
         Name = {
             Enabled = false,
+	    Type = "DisplayName",
             Color = Color3.fromRGB(255, 255, 255);
         },
         Distance = {
@@ -31,7 +32,7 @@ local Config = {
             Color = Color3.fromRGB(255, 255, 255);
         },
         Weapon = {
-            Enabled = true,
+            Enabled = false,
             Color = Color3.fromRGB(255, 255, 255);
         },
     },
