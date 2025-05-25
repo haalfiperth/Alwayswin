@@ -12,7 +12,7 @@ local Config = {
                     End = Color3.fromRGB(0, 255, 0)
                 },
                 Rotation = {
-                	Amount = 1,
+                    Amount = 1,
                     Moving = {
                     	Enabled = true,
                         Speed = 300
@@ -43,7 +43,7 @@ local Config = {
         Width = 2.5,
         Lerp = 0.05,
         Moving = {
-        	Enabled = false,
+            Enabled = false,
             Speed = 1
         },
         Health = {
@@ -540,8 +540,6 @@ game:GetService("Players").PlayerRemoving:Connect(
     end
 )
 
-return Config
-
 connections.main = connections.main or {}
 
 connections.main.RenderStepped =
@@ -554,3 +552,5 @@ connections.main.RenderStepped =
         end
     end
 )
+
+return Config
