@@ -488,7 +488,7 @@ utility.funcs.update =
             if outline and fill then
                 outline.Visible = true
                 outline.Position = UDim2.new(0, x - 1, 0, y - 1)
-                outline.Size = UDim2.new(0, bar_width + 2, 0, lerpedArmor * bar_height + 1.1)
+                outline.Size = UDim2.new(0, bar_width + 2, 0, bar_height + 1.1)
                 outline.BackgroundTransparency = 0.2
 		
                 fill.Visible = true
