@@ -4,7 +4,7 @@ getgenv().crosshair = {
     refreshrate = 0,
     mode = 'Middle', -- Middle, Mouse, Custom
     firsttext = "alwayswin",
-    secondtext = ".recode",
+    secondtext = ".lol",
     position = Vector2.new(0, 0),
     lines = 4, -- Change this value to test different line counts
     width = 1.8,
@@ -15,6 +15,7 @@ getgenv().crosshair = {
     spin_speed = 150,
     spin_max = 340,
     spin_style = Enum.EasingStyle.Circular, -- Linear for normal smooth spin
+    spin_direction = Enum.EasingDirection.InOut,
     resize = false, -- animate the length
     resize_speed = 150,
     resize_min = 5,
@@ -102,15 +103,14 @@ runservice.PostSimulation:Connect(function()
         local text_1 = drawings.text.Text1
         local text_2 = drawings.text.Text2
 
-        text_1.Visible = crosshair.enabled and crosshair.text
-        text_2.Visible = crosshair.enabled and crosshair.text
+        text_1.Visible = crosshair.text
+        text_2.Visible = crosshair.text
 
         if crosshair.enabled then
             local text_x = text_1.TextBounds.X + text_2.TextBounds.X
             text_1.Position = position + Vector2.new(-text_x / 2, crosshair.radius + (crosshair.resize and crosshair.resize_max or crosshair.length) + 15)
             text_2.Position = text_1.Position + Vector2.new(text_1.TextBounds.X)
             text_2.Color = crosshair.color
-            text_2.Transparency = math.abs(math.sin(tick() * 4)) or 1
 
             for idx = 1, crosshair.lines do
                 local outline = drawings.crosshair[idx][1] -- Outline
@@ -121,7 +121,7 @@ runservice.PostSimulation:Connect(function()
 
                 if crosshair.spin then
                     local spin_angle = -_tick * crosshair.spin_speed % crosshair.spin_max
-                    angle = angle + tweenservice:GetValue(spin_angle / 360, crosshair.spin_style, Enum.EasingDirection.InOut) * 360
+                    angle = angle + tweenservice:GetValue(spin_angle / 360, crosshair.spin_style, crosshair.spin_direction) * 360
                 end
 
                 if crosshair.resize then
