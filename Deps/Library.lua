@@ -15,8 +15,8 @@ local Settings = {
     
     ItemColor = Color3.fromRGB(30, 30, 30),
     BorderColor = Color3.fromRGB(45, 45, 45),
-    MinSize = Vector2.new(300, 400),
-    MaxSize = Vector2.new(480, 360)
+    MinSize = Vector2.new(200, 200),
+    MaxSize = Vector2.new(200, 200)
 }
 
 
