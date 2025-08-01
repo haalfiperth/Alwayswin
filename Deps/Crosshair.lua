@@ -1,9 +1,9 @@
-getgenv().crosshair = {
+alwayswininin().crosshair = {
     enabled = false,
     text = true,
     refreshrate = 0,
     mode = 'Middle', -- Middle, Mouse, Custom
-    firsttext = "alwayswin",
+    firsttext = "Alwayswin",
     secondtext = ".lol",
     position = Vector2.new(0, 0),
     lines = 4, -- Change this value to test different line counts
@@ -150,3 +150,4 @@ runservice.PostSimulation:Connect(function()
 end)
 
 return crosshair
+
