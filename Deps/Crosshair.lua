@@ -1,4 +1,4 @@
-alwayswininin().crosshair = {
+getgenv().crosshair = {
     enabled = false,
     text = true,
     refreshrate = 0,
@@ -150,4 +150,5 @@ runservice.PostSimulation:Connect(function()
 end)
 
 return crosshair
+
 
