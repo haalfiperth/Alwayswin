@@ -335,7 +335,7 @@ local Alwayswin = {
 	Windows = {},
 	Scale = {
 		Window = UDim2.new(0, 460,0, 500),
-		Mobile = UDim2.new(0, 350,0, 400),
+		Mobile = UDim2.new(0, 450,0, 375),
 		TabOpen = 185,
 		TabClose = 85,
 	},
@@ -9062,5 +9062,6 @@ end;
 
 
 return Alwayswin;
+
 
 
