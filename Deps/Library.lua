@@ -381,6 +381,7 @@ Alwayswin.Lucide = {
 	['lucide-internet'] = "rbxassetid://12785195438",
 	['lucide-earth'] = "rbxassetid://115986292591138",
 	['lucide-settings-3'] = "rbxassetid://14007344336",
+	["lucide-anti-aim"] = "rbxassetid://6023426921",
 	["lucide-accessibility"] = "rbxassetid://10709751939",
 	["lucide-activity"] = "rbxassetid://10709752035",
 	["lucide-air-vent"] = "rbxassetid://10709752131",
@@ -884,7 +885,7 @@ Alwayswin.Lucide = {
 	["lucide-log-in"] = "rbxassetid://10723434830",
 	["lucide-log-out"] = "rbxassetid://10723434906",
 	["lucide-luggage"] = "rbxassetid://10723434993",
-	["lucide-main"] = "rbxassetid://6022668955",
+	["lucide-main"] = "rbxassetid://8547249956",
 	["lucide-magnet"] = "rbxassetid://10723435069",
 	["lucide-mail"] = "rbxassetid://10734885430",
 	["lucide-mail-check"] = "rbxassetid://10723435182",
@@ -9058,5 +9059,6 @@ function Alwayswin.newNotify()
 
 	return Alwayswin.NOTIFY_CACHE;
 end;
+
 
 return Alwayswin;
