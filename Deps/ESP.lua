@@ -14,7 +14,7 @@ local Config = {
                 Rotation = {
                     Amount = 1,
                     Moving = {
-                    	Enabled = true,
+                    	Enabled = false,
                         Speed = 300
                     },
                 },
@@ -476,5 +476,6 @@ connections.main.RenderStepped =
         end
     end
 )
+
 
 return Config
