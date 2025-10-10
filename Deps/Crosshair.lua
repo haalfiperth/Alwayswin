@@ -1,6 +1,7 @@
 getgenv().crosshair = {
     enabled = false,
-    text = true,
+    text = false,
+    textpulse = false,
     refreshrate = 0,
     mode = 'Middle', -- Middle, Mouse, Custom
     firsttext = "Alwayswin",
@@ -10,12 +11,12 @@ getgenv().crosshair = {
     width = 1.8,
     length = 15,
     radius = 11,
-    color = Color3.fromRGB(189,172,255),
+    color = Color3.fromRGB(189, 172, 255),
+    textcolor = Color3.fromRGB(189, 172, 255),
     spin = false,
     spin_speed = 150,
     spin_max = 340,
     spin_style = Enum.EasingStyle.Circular, -- Linear for normal smooth spin
-    spin_direction = Enum.EasingDirection.InOut,
     resize = false, -- animate the length
     resize_speed = 150,
     resize_min = 5,
@@ -103,15 +104,22 @@ runservice.PostSimulation:Connect(function()
         local text_1 = drawings.text.Text1
         local text_2 = drawings.text.Text2
 
-        text_1.Visible = crosshair.enabled
-        text_2.Visible = crosshair.enabled
+        text_1.Visible = crosshair.text
+        text_2.Visible = crosshair.text
 
-        if crosshair.enabled then
+        if crosshair.text then
             local text_x = text_1.TextBounds.X + text_2.TextBounds.X
             text_1.Position = position + Vector2.new(-text_x / 2, crosshair.radius + (crosshair.resize and crosshair.resize_max or crosshair.length) + 15)
             text_2.Position = text_1.Position + Vector2.new(text_1.TextBounds.X)
-            text_2.Color = crosshair.color
+            text_2.Color = crosshair.textcolor
+        end
 
+        if crosshair.text and crosshair.textpulse then
+            local Sine = crosshair.textpulse and math.abs(math.sin(tick() * 4)) or 1 
+            text_1.Transparency = Sine
+        end
+
+        if crosshair.enabled then
             for idx = 1, crosshair.lines do
                 local outline = drawings.crosshair[idx][1] -- Outline
                 local inline = drawings.crosshair[idx][2]  -- Inline
@@ -121,7 +129,7 @@ runservice.PostSimulation:Connect(function()
 
                 if crosshair.spin then
                     local spin_angle = -_tick * crosshair.spin_speed % crosshair.spin_max
-                    angle = angle + tweenservice:GetValue(spin_angle / 360, crosshair.spin_style, crosshair.spin_direction) * 360
+                    angle = angle + tweenservice:GetValue(spin_angle / 360, crosshair.spin_style, Enum.EasingDirection.InOut) * 360
                 end
 
                 if crosshair.resize then
@@ -149,7 +157,5 @@ runservice.PostSimulation:Connect(function()
     end
 end)
 
+
 return crosshair
-
-
-
