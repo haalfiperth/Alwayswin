@@ -5112,7 +5112,7 @@
 
         function Library.Watermark(cfg)
             cfg = cfg or { }; cfg = Library.Config(cfg, {
-                text = "Elisium.lol | {game} | {time} | {date}",
+                text = "Alwayswin.lol | {game} | {time} | {date}",
                 visible = true,
                 rate = 1 / 60,
             })
@@ -5363,4 +5363,5 @@
     
 
     return Library, Utility
+
 
