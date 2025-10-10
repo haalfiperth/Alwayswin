@@ -1,10 +1,10 @@
 setfpscap(32555555555555555)
 local Config = {
     Box = {
-        Enabled = true,
+        Enabled = false,
         Color = Color3.fromRGB(255, 255, 255),
         Filled = {
-            Enabled = true,
+            Enabled = false,
             Gradient = {
                 Enabled = true,
                 Color = {
@@ -14,7 +14,7 @@ local Config = {
                 Rotation = {
                     Amount = 1,
                     Moving = {
-                    	Enabled = true,
+                    	Enabled = false,
                         Speed = 300
                     },
                 },
@@ -42,11 +42,11 @@ local Config = {
         Width = 2.5,
         Lerp = 0.05,
         Moving = {
-            Enabled = true,
+            Enabled = false,
             Speed = 1
         },
         Health = {
-            Enabled = true,
+            Enabled = false,
             Color1 = Color3.fromRGB(0, 255, 0),
             Color2 = Color3.fromRGB(255, 255, 0),
             Color3 = Color3.fromRGB(255, 0, 0)
@@ -359,7 +359,7 @@ utility.funcs.update =
 
         if Config.Bars.Health.Enabled and humanoid then
             local targetHealth = math.clamp(humanoid.Health / humanoid.MaxHealth, 0, 1)
-            local lastHealth = playerCache.Bars.Health.LastHealth or targetHealth
+            local lastHealth = targetHealth
             local lerpedHealth = lastHealth + (targetHealth - lastHealth) * Config.Bars.Lerp
             playerCache.Bars.Health.LastHealth = lerpedHealth
             local x = base_x - (bar_width + 4)
@@ -421,7 +421,7 @@ utility.funcs.update =
             local bodyEffects = character:FindFirstChild("BodyEffects")
             local values = bodyEffects and bodyEffects:FindFirstChild("Armor")
             local targetArmor = values and math.clamp(values.Value / 130, 0, 1) or 0
-            local lastArmor = playerCache.Bars.Armor.LastArmor or targetArmor
+            local lastArmor = targetArmor
             local lerpedArmor = lastArmor + (targetArmor - lastArmor) * Config.Bars.Lerp
             playerCache.Bars.Armor.LastArmor = lerpedArmor
             local x = base_x - (bar_width * 2 + 6 + 2)
@@ -479,3 +479,5 @@ connections.main.RenderStepped =
         end
     end
 )
+
+return Config
