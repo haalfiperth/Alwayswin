@@ -2,7 +2,7 @@ local Library = {};
 do
 	Library = {
 		Open = true;
-		Accent = Color3.fromRGB(207, 227, 0);
+		Accent = Color3.fromRGB(189, 172, 255);
 		Pages = {};
 		Sections = {};
 		Flags = {};
@@ -2627,4 +2627,5 @@ do
 		--
 	end
 	return Library
+
 end
