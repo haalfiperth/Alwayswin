@@ -40,7 +40,7 @@ local Config = {
             Casing = "lowercase"
         }
     },
-    Bars = {l
+    Bars = {
         Width = 2.5,
         Lerp = 0.05,
         Health = {
@@ -91,6 +91,7 @@ local rotation_angle, okazaki_tickling_ushio = -45, tick()
 
 local utility, connections, cache = {}, {}, {}
 utility.funcs = utility.funcs or {}
+local originalStates = {}
 local increase = Vector3.new(2, 2, 2)
 local vertices = { { -0.5, -0.5, -0.5 }, { -0.5, 0.5, -0.5 }, { 0.5, -0.5, -0.5 }, { 0.5, 0.5, -0.5 },{ -0.5, -0.5, 0.5 }, { -0.5, 0.5, 0.5 }, { 0.5, -0.5, 0.5 }, { 0.5, 0.5, 0.5 } };
 
@@ -190,7 +191,7 @@ utility.funcs.make_text = function(p)
     d.TextScaled = false
     d.TextSize = 10
     d.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-    d.FontFace = GetFontFromIndex(Fonts[Config.Text.Font]
+    d.FontFace = GetFontFromIndex(Fonts[Config.Text.Font])
     d.Text = ""
     return d
 end
@@ -704,5 +705,6 @@ connections.main.RenderStepped =
         end
     end
 )
+
 
 return Config
