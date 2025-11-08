@@ -493,7 +493,7 @@ utility.funcs.update =
             weaponLabel.TextColor3 = Config.Text.Weapon.Color
             weaponLabel.FontFace = GetFontFromIndex(Fonts[Config.Text.Font])
             local Weapon = character:FindFirstChildOfClass("Weapon")
-            weaponLabel.Text = utility.funcs.get_case(Weapon and Weapon.Name or "none", Config.Text.Weapon.Casing)
+            weaponLabel.Text = utility.funcs.get_case(Weapon and Weapon.Name or "None", Config.Text.Weapon.Casing)
         else
             weaponLabel.Visible = false
         end
@@ -503,7 +503,7 @@ utility.funcs.update =
             distanceLabel.Position = UDim2.new(0, baseX - (distanceLabel.AbsoluteSize.X / 2), 0, baseY + scale.Y + 5)
             distanceLabel.TextColor3 = Config.Text.Distance.Color
             distanceLabel.FontFace = GetFontFromIndex(Fonts[Config.Text.Font])
-            distanceLabel.Text = utility.funcs.get_case(string.format("[%.0fm]", distance * 0.28), Config.Text.Distance.Casing)
+            distanceLabel.Text = utility.funcs.get_case(string.format("[%.0fM]", distance * 0.28), Config.Text.Distance.Casing)
         else
             distanceLabel.Visible = false
         end
@@ -708,3 +708,4 @@ connections.main.RenderStepped =
 
 
 return Config
+
