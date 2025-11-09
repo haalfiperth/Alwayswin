@@ -122,7 +122,7 @@ for _, font in fonts do
                 }
             }
         }
-        writefile(font.json, HttpService:JSONEncode(fontConfig))
+        writefile(font.json, game:GetService("HttpService"):JSONEncode(fontConfig))
     end
 end
 
@@ -649,5 +649,6 @@ connections.main.RenderStepped =
         end
     end
 )
+
 
 return Config
