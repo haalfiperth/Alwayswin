@@ -645,7 +645,7 @@ task.spawn(function()
                         end
                     end
                 else
-                    for _, v in ipairs(char:GetChildren()) do
+                    for _, v in ipairs(player.Character:GetChildren()) do
                         if v:IsA("BasePart") and v.Transparency ~= 1 then
                             if v:FindFirstChild("Glow") then
                                 v.Glow:Destroy()
@@ -695,6 +695,7 @@ connections.main.RenderStepped =
         end
     end
 )
+
 
 
 return Config
