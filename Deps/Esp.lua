@@ -622,14 +622,14 @@ task.spawn(function()
                             if not part:FindFirstChild("Chams") then
                                 local chamsBox = Instance.new("BoxHandleAdornment")
                                 chamsBox.Name = "Chams"
-                                chamsBox.AlwaysOnTop = Config.Chams.BehindWalls
                                 chamsBox.ZIndex = 4
                                 chamsBox.Adornee = part
-                                chamsBox.Color3 = Config.Chams.Color
-                                chamsBox.Transparency = 0.5
                                 chamsBox.Size = part.Size + Vector3.new(0.02, 0.02, 0.02)
                                 chamsBox.Parent = part
                             end
+                            chamsBox.AlwaysOnTop = Config.Chams.BehindWalls
+                            chamsBox.Color3 = Config.Chams.Color
+                            chamsBox.Transparency = 0.5
                             
                             if not part:FindFirstChild("Glow") then
                                 local glowBox = Instance.new("BoxHandleAdornment")
@@ -637,11 +637,11 @@ task.spawn(function()
                                 glowBox.AlwaysOnTop = false
                                 glowBox.ZIndex = 3
                                 glowBox.Adornee = part
-                                glowBox.Color3 = Config.Chams.Color
                                 glowBox.Transparency = 0
                                 glowBox.Size = part.Size + Vector3.new(0.13, 0.13, 0.13)
                                 glowBox.Parent = part
                             end
+                            glowBox.Color3 = Config.Chams.Color
                         end
                     end
                 else
@@ -699,3 +699,4 @@ connections.main.RenderStepped =
 
 
 return Config
+
