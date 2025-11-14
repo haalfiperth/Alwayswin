@@ -496,7 +496,7 @@ utility.funcs.update =
         
                         if Config.Bars.Moving.Enabled then
                             local speed = Config.Bars.Moving.Speed
-                            local t = (math.sin(tick() * speed) + 1) / 2
+                            local t = (math.sin(tick() * (speed * 3))) * 0.5 + 0.5
                             
                             local blend1 = c1:Lerp(c2, t)
                             local blend2 = c2:Lerp(c3, t)
@@ -604,7 +604,7 @@ utility.funcs.update =
         
                             if Config.Bars.Moving.Enabled then
                                 local speed = Config.Bars.Moving.Speed
-                                local t = (math.sin(tick() * speed) + 1) / 2
+                                local t = (math.sin(tick() * (speed * 3))) * 0.5 + 0.5
                                 
                                 local blend1 = c1:Lerp(c2, t)
                                 local blend2 = c2:Lerp(c3, t)
@@ -858,6 +858,7 @@ connections.main.RenderStepped =
 )
 
 return Config
+
 
 
 
