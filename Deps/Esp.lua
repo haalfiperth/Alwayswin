@@ -495,9 +495,18 @@ utility.funcs.update =
                         local c1, c2, c3 = Config.Bars.Health.Color1, Config.Bars.Health.Color2, Config.Bars.Health.Color3
         
                         if Config.Bars.Moving.Enabled then
-                            c1 = Color3.fromHSV((t) % 1, 1, 1)
-                            c2 = Color3.fromHSV((t + 0.33) % 1, 1, 1)
-                            c3 = Color3.fromHSV((t + 0.66) % 1, 1, 1)
+                            local speed = Config.Bars.Moving.Speed
+                            local t = (tick() * speed) % 1
+                            
+                            local blend1 = c1:Lerp(c2, t)
+                            local blend2 = c2:Lerp(c3, t)
+                            local blend3 = c3:Lerp(c1, t)
+                            
+                            playerCache.Bars.Health.Gradient.Color = ColorSequence.new({
+                                ColorSequenceKeypoint.new(0, blend1),
+                                ColorSequenceKeypoint.new(0.5, blend2),
+                                ColorSequenceKeypoint.new(1, blend3)
+                            })
                         end
                         
                         playerCache.Bars.Health.Gradient.Color = ColorSequence.new({
@@ -594,9 +603,18 @@ utility.funcs.update =
                             local c1, c2, c3 = Config.Bars.Armor.Color1, Config.Bars.Armor.Color2, Config.Bars.Armor.Color3
         
                             if Config.Bars.Moving.Enabled then
-                                c1 = Color3.fromHSV((t) % 1, 1, 1)
-                                c2 = Color3.fromHSV((t + 0.33) % 1, 1, 1)
-                                c3 = Color3.fromHSV((t + 0.66) % 1, 1, 1)
+                                local speed = Config.Bars.Moving.Speed
+                                local t = (tick() * speed) % 1
+                                
+                                local blend1 = c1:Lerp(c2, t)
+                                local blend2 = c2:Lerp(c3, t)
+                                local blend3 = c3:Lerp(c1, t)
+                            
+                                playerCache.Bars.Armor.Gradient.Color = ColorSequence.new({
+                                    ColorSequenceKeypoint.new(0, blend1),
+                                    ColorSequenceKeypoint.new(0.5, blend2),
+                                    ColorSequenceKeypoint.new(1, blend3)
+                                })
                             end
         
                             playerCache.Bars.Armor.Gradient.Color = ColorSequence.new({
@@ -840,3 +858,4 @@ connections.main.RenderStepped =
 )
 
 return Config
+
