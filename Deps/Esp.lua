@@ -507,13 +507,13 @@ utility.funcs.update =
                                 ColorSequenceKeypoint.new(0.5, blend2),
                                 ColorSequenceKeypoint.new(1, blend3)
                             })
+                        else
+                            playerCache.Bars.Health.Gradient.Color = ColorSequence.new({
+                                ColorSequenceKeypoint.new(0, c1),
+                                ColorSequenceKeypoint.new(0.5, c2),
+                                ColorSequenceKeypoint.new(1, c3)
+                            })
                         end
-                        
-                        playerCache.Bars.Health.Gradient.Color = ColorSequence.new({
-                            ColorSequenceKeypoint.new(0, c1),
-                            ColorSequenceKeypoint.new(0.5, c2),
-                            ColorSequenceKeypoint.new(1, c3)
-                        })
                     elseif Config.Bars.Type == "Solid Color" then
                         playerCache.Bars.Health.Gradient.Color = ColorSequence.new(Config.Bars.Health.Color1)
                     elseif Config.Bars.Type == "Rainbow" then
@@ -615,13 +615,13 @@ utility.funcs.update =
                                     ColorSequenceKeypoint.new(0.5, blend2),
                                     ColorSequenceKeypoint.new(1, blend3)
                                 })
+                            else
+                                playerCache.Bars.Armor.Gradient.Color = ColorSequence.new({
+                                    ColorSequenceKeypoint.new(0, c1),
+                                    ColorSequenceKeypoint.new(0.5, c2),
+                                    ColorSequenceKeypoint.new(1, c3)
+                                })
                             end
-        
-                            playerCache.Bars.Armor.Gradient.Color = ColorSequence.new({
-                                ColorSequenceKeypoint.new(0, c1),
-                                ColorSequenceKeypoint.new(0.5, c2),
-                                ColorSequenceKeypoint.new(1, c3)
-                            })
                         elseif Config.Bars.Type == "Solid Color" then
                             playerCache.Bars.Armor.Gradient.Color = ColorSequence.new(Config.Bars.Armor.Color1)
                         elseif Config.Bars.Type == "Rainbow" then
@@ -858,4 +858,5 @@ connections.main.RenderStepped =
 )
 
 return Config
+
 
