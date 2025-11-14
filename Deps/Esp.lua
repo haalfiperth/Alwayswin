@@ -469,7 +469,7 @@ utility.funcs.update =
                 outline.Visible = true
         
                 if Config.Bars.Resize then
-                    local currentBarHeight = math.max(bar_height * lerpedHealth, 2)
+                    local currentBarHeight = bar_height * lerpedHealth
                     outline.Position = UDim2.new(0, x - 1, 0, y + bar_height - currentBarHeight - 1)
                     outline.Size = UDim2.new(0, bar_width + 2, 0, currentBarHeight + 2)
         
@@ -577,7 +577,7 @@ utility.funcs.update =
                     outline.Visible = true
         
                     if Config.Bars.Resize then
-                        local currentBarHeight = math.max(bar_height * lerpedArmor, 2)
+                        local currentBarHeight = bar_height * lerpedArmor
                         outline.Position = UDim2.new(0, x - 1, 0, y + bar_height - currentBarHeight - 1)
                         outline.Size = UDim2.new(0, bar_width + 2, 0, currentBarHeight + 2)
         
@@ -858,6 +858,7 @@ connections.main.RenderStepped =
 )
 
 return Config
+
 
 
 
