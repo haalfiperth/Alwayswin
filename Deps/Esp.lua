@@ -559,6 +559,90 @@ utility.funcs.update =
                 if healthBarVisible then
                     x = base_x - (bar_width * 2 + 6 + 2)
                 else
+if Config.Bars.Health.Enabled and humanoid then
+            local targetHealth = math.clamp(humanoid.Health / humanoid.MaxHealth, 0, 1)
+            local lastHealth = playerCache.Bars.Health.LastHealth or targetHealth
+            local lerpedHealth = lastHealth + (targetHealth - lastHealth) * Config.Bars.Lerp
+            playerCache.Bars.Health.LastHealth = lerpedHealth
+            
+            local x = base_x - (bar_width + 4)
+            local outline = playerCache.Bars.Health.Outline
+            local fill = playerCache.Bars.Health.Frame
+        
+            if outline and fill then
+                healthBarVisible = true
+                outline.Visible = true
+                
+                if Config.Bars.Resize then
+                    local currentBarHeight = math.max(bar_height * lerpedHealth, 2)
+                    outline.Position = UDim2.new(0, x - 1, 0, y + bar_height - currentBarHeight - 1)
+                    outline.Size = UDim2.new(0, bar_width + 2, 0, currentBarHeight + 2)
+                    
+                    fill.Visible = true
+                    fill.Position = UDim2.new(0, 1, 0, 1)
+                    fill.Size = UDim2.new(0, bar_width, 0, currentBarHeight)
+                else
+                    outline.Position = UDim2.new(0, x - 1, 0, y - 1)
+                    outline.Size = UDim2.new(0, bar_width + 2, 0, bar_height + 2)
+                    
+                    fill.Visible = true
+                    fill.Position = UDim2.new(0, 1, 0, (1 - lerpedHealth) * bar_height + 1)
+                    fill.Size = UDim2.new(0, bar_width, 0, lerpedHealth * bar_height)
+                end
+                
+                outline.BackgroundTransparency = 0.2
+                
+                if playerCache.Bars.Health.Gradient then
+                    if Config.Bars.Type == "Gradient" then
+                        playerCache.Bars.Health.Gradient.Color = ColorSequence.new({
+                            ColorSequenceKeypoint.new(0, Config.Bars.Health.Color1),
+                            ColorSequenceKeypoint.new(0.5, Config.Bars.Health.Color2),
+                            ColorSequenceKeypoint.new(1, Config.Bars.Health.Color3)
+                        })
+                    elseif Config.Bars.Type == "Solid Color" then
+                        playerCache.Bars.Health.Gradient.Color = ColorSequence.new(Config.Bars.Health.Color1)
+                    elseif Config.Bars.Type == "Rainbow" then
+                        local hue = (tick() * 0.5) % 1
+                        playerCache.Bars.Health.Gradient.Color = ColorSequence.new(Color3.fromHSV(hue, 1, 1))
+                    end
+                    
+                    if Config.Bars.Moving.Enabled then
+                        local currentTick = tick()
+                        local deltaTime = currentTick - playerCache.Bars.Health.Tick
+                        playerCache.Bars.Health.Rotation = playerCache.Bars.Health.Rotation + (deltaTime * Config.Bars.Moving.Speed)
+                        playerCache.Bars.Health.Gradient.Rotation = playerCache.Bars.Health.Rotation
+                        playerCache.Bars.Health.Tick = currentTick
+                    else
+                        playerCache.Bars.Health.Gradient.Rotation = 90
+                        playerCache.Bars.Health.Rotation = 90
+                    end
+                end
+            end
+        else
+            if playerCache.Bars.Health.Outline then playerCache.Bars.Health.Outline.Visible = false end
+            if playerCache.Bars.Health.Frame then playerCache.Bars.Health.Frame.Visible = false end
+        end
+        
+        if Config.Bars.Armor.Enabled and character then
+            local bodyEffects = character:FindFirstChild("BodyEffects")
+            local values = bodyEffects and bodyEffects:FindFirstChild("Armor")
+            local armorValue = values and values.Value or 0
+            local targetArmor = math.clamp(armorValue / 130, 0, 1)
+            
+            local shouldShowArmor = true
+            if Config.Bars.Armor.Armored then
+                shouldShowArmor = armorValue > 0
+            end
+            
+            if shouldShowArmor then
+                local lastArmor = playerCache.Bars.Armor.LastArmor or targetArmor
+                local lerpedArmor = lastArmor + (targetArmor - lastArmor) * Config.Bars.Lerp
+                playerCache.Bars.Armor.LastArmor = lerpedArmor
+                
+                local x
+                if healthBarVisible then
+                    x = base_x - (bar_width * 2 + 6 + 2)
+                else
                     x = base_x - (bar_width + 4)
                 end
                 
@@ -589,13 +673,6 @@ utility.funcs.update =
                     outline.BackgroundTransparency = 0.2
                     
                     if playerCache.Bars.Armor.Gradient then
-                        playerCache.Bars.Armor.Gradient.Color = ColorSequence.new({
-                            ColorSequenceKeypoint.new(0, Config.Bars.Armor.Color1),
-                            ColorSequenceKeypoint.new(0.5, Config.Bars.Armor.Color2),
-                            ColorSequenceKeypoint.new(1, Config.Bars.Armor.Color3)
-                        })
-                        
-                        if playerCache.Bars.Armor.Gradient then
                         if Config.Bars.Type == "Gradient" then
                             playerCache.Bars.Armor.Gradient.Color = ColorSequence.new({
                                 ColorSequenceKeypoint.new(0, Config.Bars.Armor.Color1),
@@ -832,5 +909,6 @@ connections.main.RenderStepped =
 
 
 return Config
+
 
 
