@@ -3,7 +3,7 @@ local Config = {
     Box = {
         Enabled = false,
         Gradient = {
-            Enabled = false,
+            Enabled = true,
             Color1 = Color3.fromRGB(255, 255, 255),
             Color2 = Color3.fromRGB(255, 255, 255),
             Color3 = Color3.fromRGB(255, 255, 255),
@@ -832,4 +832,5 @@ connections.main.RenderStepped =
 
 
 return Config
+
 
