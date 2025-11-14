@@ -2,7 +2,19 @@ setfpscap(32555555555555555)
 local Config = {
     Box = {
         Enabled = false,
-        Color = Color3.fromRGB(255, 255, 255),
+        Gradient = {
+            Enabled = false,
+            Color1 = Color3.fromRGB(255, 255, 255),
+            Color2 = Color3.fromRGB(255, 255, 255),
+            Color3 = Color3.fromRGB(255, 255, 255),
+            Rotation = {
+                Amount = 1,
+                Moving = {
+                    Enabled = false,
+                    Speed = 300
+                }
+            }
+        },
         Filled = {
             Enabled = false,
             Gradient = {
@@ -15,8 +27,8 @@ local Config = {
                     Moving = {
                     	Enabled = false,
                         Speed = 300
-                    },
-                },
+                    }
+                }
             }
         }
     },
@@ -43,6 +55,11 @@ local Config = {
         Resize = false,
         Width = 2.5,
         Lerp = 0.05,
+        Type = "Gradient",
+        Moving = {
+            Enabled = false,
+            Speed = 1
+        },
         Health = {
             Enabled = false,
             Color1 = Color3.fromRGB(0, 255, 0),
@@ -93,7 +110,8 @@ Config = Config
 Drawing = Drawing
 
 local gui_inset = game:GetService("GuiService"):GetGuiInset()
-local rotation_angle, okazaki_tickling_ushio = -45, tick()
+local box_rotation_angle, box_tick = -45, tick()
+local fill_rotation_angle, fill_tick = -45, tick()
 
 local utility, connections, cache = {}, {}, {}
 utility.funcs = utility.funcs or {}
@@ -214,9 +232,7 @@ utility.funcs.render =
         cache[player].Bars = {}
         cache[player].Text = {}
         cache[player].Box.Full = {
-            Square = Drawing.new("Square"),
-            Inline = Drawing.new("Square"),
-            Outline = Drawing.new("Square"),
+            Square = Instance.new("Frame", Instance.new("ScreenGui", game.CoreGui)),
             Filled = Instance.new("Frame", Instance.new("ScreenGui", game.CoreGui))
         }
 
@@ -260,7 +276,9 @@ utility.funcs.render =
             Gui = armorGui,
             Outline = armorOutline,
             Frame = armorFill,
-            Gradient = armorGradient
+            Gradient = armorGradient,
+            Tick = tick(),
+            Rotation = 90
         }
 
         local healthGui = Instance.new("ScreenGui")
@@ -291,7 +309,9 @@ utility.funcs.render =
             Gui = healthGui,
             Outline = healthOutline,
             Frame = healthFill,
-            Gradient = healthGradient
+            Gradient = healthGradient,
+            Tick = tick(),
+            Rotation = 90
         }
     end
 )
@@ -304,9 +324,9 @@ utility.funcs.clear_esp =
         end
 
         if cache[player].Box and cache[player].Box.Full then
-            cache[player].Box.Full.Square.Visible = false
-            cache[player].Box.Full.Outline.Visible = false
-            cache[player].Box.Full.Inline.Visible = false
+            if cache[player].Box.Full.Square then
+                cache[player].Box.Full.Square.Visible = false
+            end
             if cache[player].Box.Full.Filled then
                 cache[player].Box.Full.Filled.Visible = false
             end
@@ -375,31 +395,36 @@ utility.funcs.update =
 
         local playerCache = cache[player]
         local fullBox = playerCache.Box.Full
-        local square, outline, inline, filled = fullBox.Square, fullBox.Outline, fullBox.Inline, fullBox.Filled
+        local square, filled = fullBox.Square, fullBox.Filled
 
         if Config.Box.Enabled then
-            square.Visible = true
             square.Position = position
             square.Size = scale
-            square.Color = Config.Box.Color
-            square.Thickness = 2
-            square.Filled = false
-            square.ZIndex = 9e9
-
-            outline.Visible = true
-            outline.Position = position - Vector2.new(1, 1)
-            outline.Size = scale + Vector2.new(2, 2)
-            outline.Color = Color3.new(0, 0, 0)
-            outline.Thickness = 1
-            outline.Filled = false
-
-            inline.Visible = true
-            inline.Position = position + Vector2.new(1, 1)
-            inline.Size = scale - Vector2.new(2, 2)
-            inline.Color = Color3.new(0, 0, 0)
-            inline.Thickness = 1
-            inline.Filled = false
-
+            square.BackgroundTransparency = 0.3
+            square.BackgroundColor3 = Color3.fromRGB(255,255,255)
+            square.Visible = true
+            square.ZIndex = -9e9
+            
+            if Config.Box.Gradient.Enabled then
+                local gradient = square:FindFirstChild("Gradient") or Instance.new("UIGradient")
+                gradient.Name = "Gradient"
+                gradient.Color = ColorSequence.new({
+                    ColorSequenceKeypoint.new(0, Config.Box.Gradient.Color1),
+                    ColorSequenceKeypoint.new(0.5, Config.Box.Gradient.Color2),
+                    ColorSequenceKeypoint.new(1, Config.Box.Gradient.Color3)
+                })
+                box_rotation_angle = box_rotation_angle + (tick() - box_tick) * Config.Box.Gradient.Rotation.Moving.Speed * math.cos(math.pi / 4 * tick() - math.pi / 2)
+                if Config.Box.Gradient.Rotation.Moving.Enabled then
+                   gradient.Rotation = box_rotation_angle
+                else
+                    gradient.Rotation = Config.Box.Gradient.Rotation.Amount
+                end
+                box_tick = tick()
+                if not gradient.Parent then
+                    gradient.Parent = square
+                end
+            end
+            
             if Config.Box.Filled.Enabled and filled then
                 filled.Position = UDim2.new(0, position.X, 0, position.Y - gui_inset.Y)
                 filled.Size = UDim2.new(0, scale.X, 0, scale.Y)
@@ -416,13 +441,13 @@ utility.funcs.update =
                         ColorSequenceKeypoint.new(0.5, Config.Box.Filled.Gradient.Color2),
                         ColorSequenceKeypoint.new(1, Config.Box.Filled.Gradient.Color3)
                     })
-                    rotation_angle = rotation_angle + (tick() - okazaki_tickling_ushio) * Config.Box.Filled.Gradient.Rotation.Moving.Speed * math.cos(math.pi / 4 * tick() - math.pi / 2)
+                    fill_rotation_angle = fill_rotation_angle + (tick() - fill_tick) * Config.Box.Filled.Gradient.Rotation.Moving.Speed * math.cos(math.pi / 4 * tick() - math.pi / 2)
                     if Config.Box.Filled.Gradient.Rotation.Moving.Enabled then
-                        gradient.Rotation = rotation_angle
+                        gradient.Rotation = fill_rotation_angle
                     else
                         gradient.Rotation = Config.Box.Filled.Gradient.Rotation.Amount
                     end
-                    okazaki_tickling_ushio = tick()
+                    fill_tick = tick()
                     if not gradient.Parent then
                         gradient.Parent = filled
                     end
@@ -431,9 +456,7 @@ utility.funcs.update =
                 filled.Visible = false
             end
         else
-            square.Visible = false
-            outline.Visible = false
-            inline.Visible = false
+            if square then square.Visible = false end
             if filled then filled.Visible = false end
         end
 
@@ -484,6 +507,31 @@ utility.funcs.update =
                         ColorSequenceKeypoint.new(0.5, Config.Bars.Health.Color2),
                         ColorSequenceKeypoint.new(1, Config.Bars.Health.Color3)
                     })
+                    
+                if playerCache.Bars.Health.Gradient then
+                    if Config.Bars.Type == "Gradient" then
+                        playerCache.Bars.Health.Gradient.Color = ColorSequence.new({
+                            ColorSequenceKeypoint.new(0, Config.Bars.Health.Color1),
+                            ColorSequenceKeypoint.new(0.5, Config.Bars.Health.Color2),
+                            ColorSequenceKeypoint.new(1, Config.Bars.Health.Color3)
+                        })
+                    elseif Config.Bars.Type == "Solid Color" then
+                        playerCache.Bars.Health.Gradient.Color = ColorSequence.new(Config.Bars.Health.Color1)
+                    elseif Config.Bars.Type == "Rainbow" then
+                        local hue = (tick() * 0.5) % 1
+                        playerCache.Bars.Health.Gradient.Color = ColorSequence.new(Color3.fromHSV(hue, 1, 1))
+                    end
+                    
+                    if Config.Bars.Moving.Enabled then
+                        local currentTick = tick()
+                        local deltaTime = currentTick - playerCache.Bars.Health.Tick
+                        playerCache.Bars.Health.Rotation = playerCache.Bars.Health.Rotation + (deltaTime * Config.Bars.Moving.Speed)
+                        playerCache.Bars.Health.Gradient.Rotation = playerCache.Bars.Health.Rotation
+                        playerCache.Bars.Health.Tick = currentTick
+                    else
+                        playerCache.Bars.Health.Gradient.Rotation = 90
+                        playerCache.Bars.Health.Rotation = 90
+                    end
                 end
             end
         else
@@ -546,6 +594,31 @@ utility.funcs.update =
                             ColorSequenceKeypoint.new(0.5, Config.Bars.Armor.Color2),
                             ColorSequenceKeypoint.new(1, Config.Bars.Armor.Color3)
                         })
+                        
+                        if playerCache.Bars.Armor.Gradient then
+                        if Config.Bars.Type == "Gradient" then
+                            playerCache.Bars.Armor.Gradient.Color = ColorSequence.new({
+                                ColorSequenceKeypoint.new(0, Config.Bars.Armor.Color1),
+                                ColorSequenceKeypoint.new(0.5, Config.Bars.Armor.Color2),
+                                ColorSequenceKeypoint.new(1, Config.Bars.Armor.Color3)
+                            })
+                        elseif Config.Bars.Type == "Solid Color" then
+                            playerCache.Bars.Armor.Gradient.Color = ColorSequence.new(Config.Bars.Armor.Color1)
+                        elseif Config.Bars.Type == "Rainbow" then
+                            local hue = (tick() * 0.5) % 1
+                            playerCache.Bars.Armor.Gradient.Color = ColorSequence.new(Color3.fromHSV(hue, 1, 1))
+                        end
+                        
+                        if Config.Bars.Moving.Enabled then
+                            local currentTick = tick()
+                            local deltaTime = currentTick - playerCache.Bars.Armor.Tick
+                            playerCache.Bars.Armor.Rotation = playerCache.Bars.Armor.Rotation + (deltaTime * Config.Bars.Moving.Speed)
+                            playerCache.Bars.Armor.Gradient.Rotation = playerCache.Bars.Armor.Rotation
+                            playerCache.Bars.Armor.Tick = currentTick
+                        else
+                            playerCache.Bars.Armor.Gradient.Rotation = 90
+                            playerCache.Bars.Armor.Rotation = 90
+                        end
                     end
                 end
             else
