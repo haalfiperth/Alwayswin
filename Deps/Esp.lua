@@ -3,19 +3,6 @@ local Config = {
     Box = {
         Enabled = false,
         Color = Color3.fromRGB(255, 255, 255),
-        Gradient = {
-            Enabled = true,
-            Color1 = Color3.fromRGB(255, 255, 255),
-            Color2 = Color3.fromRGB(255, 255, 255),
-            Color3 = Color3.fromRGB(255, 255, 255),
-            Rotation = {
-                Amount = 1,
-                Moving = {
-                    Enabled = false,
-                    Speed = 300
-                }
-            }
-        },
         Filled = {
             Enabled = false,
             Gradient = {
@@ -813,3 +800,5 @@ connections.main.RenderStepped =
         end
     end
 )
+
+return Config
