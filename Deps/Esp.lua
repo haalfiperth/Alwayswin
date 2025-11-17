@@ -690,7 +690,7 @@ utility.funcs.update =
             local Weapon = player.Character:FindFirstChildOfClass("Tool")
             weaponLabel.Text = utility.funcs.get_case((Weapon and Weapon.Name) or "None", Config.Text.Weapon.Casing)
             
-            distanceYOffset = distanceYOffset + 12
+            distanceYOffset = distanceYOffset + 2
         else
             weaponLabel.Visible = false
         end
@@ -858,6 +858,7 @@ connections.main.RenderStepped =
 )
 
 return Config
+
 
 
 
