@@ -159,3 +159,5 @@ runservice.PostSimulation:Connect(function()
         end
     end
 end)
+
+return crosshair
